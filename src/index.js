@@ -29,19 +29,64 @@ app.listen(port, () => {
 // Our very first API Endpoints
 // ---------------------------------
 
+// app.get() tales in 2 parameters:
+// 1. The endpoint - the URL path that the server listens to
+// 2. The callback function - what we do when we receive a request at this endpoint which takes in two paramters: the request, and response objects
+// req = request, res = response
+
+app.get("/", (req, res) => {
+  // The res.send() sends back a string as a response
+  res.send("Hello World!");
+});
+
+app.get("/say-good-morning", (req, res) => {
+  // The res.send() sends back a string as a response
+  res.send("Good Morning!");
+});
+
+// Let's add a dynamic parameter using a colon :
+// http://localhost:3000/get-user/Tamara -> Hello, Tamara!
+// http://localhost:3000/get-user/Tamara -> Hello, Nicole!
+app.get("/get-user/:userName", (req, res) => {
+  const userName = req.params.userName;
+
+  // The res.send() sends back a string as a response
+  res.send(`Hello, ${userName}!`);
+});
+
+app.get("/order-tacos/:protein/:numTacos", (req, res) => {
+  const protein = req.params.protein;
+  const numTacos = req.params.numTacos;
+
+  res.send(`Thanks for your order! You ordered ${numTacos} ${protein} tacos.`);
+});
+
 // --------------------------------
 // 🚀 LEVEL 1 CHALLENGES
 // --------------------------------
 
 // 1. 🏆 Add a /goodbye endpoint that responds with "Goodbye, see you later!"
 
+app.get("/goodbye", (req, res) => {
+  res.send("Goodbye, see you later!");
+});
+
 // 2. 🏆 Add a /happy-birthday endpoint that responds with "Happy birthday!!!"
+
+app.get("/happy-birthday", (req, res) => {
+  res.send("Happy Birthday!!!");
+});
 
 // --------------------------------
 // 🚀 LEVEL 2 CHALLENGES — ADDING DYNAMIC PARAMETERS
 // --------------------------------
 
 // 1. 🏆 Add a /happy-birthday/:name endpoint says "Happy birthday, [name]!!!"
+
+app.get("/happy-birthday/:name", (req, res) => {
+  const name = req.params.name;
+  res.send(`Happy Birthday, ${name}!`);
+});
 
 // 2. 🏆 Add a /say-hello/:name/:language endpoint that says hello in multiple languages. Examples:
 //      - If language = "English", respond with "Hello, [name]!"
@@ -51,11 +96,44 @@ app.listen(port, () => {
 //      - Add as many languages as you want!
 //      - Otherwise, respond with "Language not supported.""
 
+app.get("/say-hello/:name/:language", (req, res) => {
+  const name = req.params.name;
+  const language = req.params.language;
+
+  const whichHello = {
+    English: "Hello",
+    Spanish: "Hola",
+    Vietnamese: "Xin Chao",
+    Turkish: "Merhaba",
+    French: "Bonjour",
+    German: "Hallo",
+    Italian: "Ciao",
+    Japanese: "Kon'nichiwa",
+  };
+
+  const hello = whichHello[language];
+
+  if (hello) {
+    res.send(`${hello}, ${name}!`);
+  } else {
+    res.send("Language not supported.");
+  }
+});
+
 // --------------------------------
 // 🚀 LEVEL 3 CHALLENGES — EVEN MORE DYNAMIC PARAMETERS
 // --------------------------------
 
 // 1. 🏆 Add a /calculate-dog-years/:dogName/:humanYears endpoint that calculates a dog's age in dog years. Refer to your dogAgeCalculator.js file.
+
+// Still researching/working out next challenge
+// app.get("/calculate-dog-years/:dogName/:humanYears", (req, res) => {
+//   const dogName = req.params.dogName;
+//   const humanYears = Number(req.params.humanYears);
+//   const dogCalculation =
+
+//   res.send();
+// });
 
 // 2. 🏆 Add a /calculate-tip/:bill/:tipPercentage/:numGuests endpoint that calculates the amount each guests owes. Refer to your tipCalculator.js file.
 
